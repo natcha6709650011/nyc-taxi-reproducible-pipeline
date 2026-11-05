@@ -218,3 +218,11 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Large raw source data
+data/raw/*.parquet
+data/raw/*.part
+
+# Generated datasets
+data/processed/*.parquet
+data/curated/*.parquet

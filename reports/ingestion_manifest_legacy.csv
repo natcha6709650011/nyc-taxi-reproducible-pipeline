@@ -1,0 +1,3 @@
+run_timestamp,filename,source,status,size_bytes,url
+2026-11-05T14:58:49.655315+00:00,yellow_tripdata_2024-01.parquet,NYC_TLC,SUCCESS,49961641,https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet
+2026-11-05T14:59:26.282476+00:00,yellow_tripdata_2024-01.parquet,existing_local,SKIPPED,49961641,https://d37ci6vzurychx.cloudfront.net/trip-data/yellow_tripdata_2024-01.parquet

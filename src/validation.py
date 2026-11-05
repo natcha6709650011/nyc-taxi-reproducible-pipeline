@@ -9,6 +9,7 @@ import glob
 import logging
 from pathlib import Path
 
+
 import duckdb
 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
@@ -102,32 +103,36 @@ def get_expected_month(file_path):
     return datetime.strptime(year_month, "%Y-%m")
 
 
+
 def validate_file(connection, file_path):
     """Validate one Parquet file."""
 
     filename = Path(file_path).name
     taxi_type = get_taxi_type(file_path)
-    expected_month = get_expected_month(file_path)
 
     result = {
         "filename": filename,
         "taxi_type": taxi_type or "UNKNOWN",
-        "expected_month": expected_month,
+        "expected_month": "",
         "row_count": 0,
         "column_count": 0,
         "missing_columns": "",
         "null_pickup_count": "",
+        "outside_month_count": "",
+        "outside_study_period_count": "",
         "pickup_min": "",
         "pickup_max": "",
-        "outside_month_count": 0,
-        "outside_study_period_count": 0,
-        "status": "FAILED",
+        "file_validation_status": "FAILED",
+        "date_scope_status": "NOT_CHECKED",
         "message": "",
     }
 
     try:
         if taxi_type is None:
             raise ValueError("Unknown taxi type in filename")
+
+        expected_month = get_expected_month(file_path)
+        result["expected_month"] = expected_month.strftime("%Y-%m")
 
         # Read schema
         safe_path = str(Path(file_path).resolve()).replace("\\", "/")
@@ -171,7 +176,8 @@ def validate_file(connection, file_path):
         row = connection.execute(query).fetchone()
 
         row_count, null_count, pickup_min, pickup_max = row
-                # Check pickup dates outside the expected file month
+
+        # Check pickup dates outside the expected file month
         month_start = expected_month.replace(day=1)
 
         if expected_month.month == 12:
@@ -212,14 +218,27 @@ def validate_file(connection, file_path):
         if row_count == 0:
             raise ValueError("File contains zero rows")
 
-        result["status"] = "PASS"
+        # File validation is separate from date scope
+        result["file_validation_status"] = "PASS"
+
+        if result["outside_study_period_count"] > 0:
+            result["date_scope_status"] = "HAS_OUT_OF_SCOPE_RECORDS"
+        elif null_count > 0:
+            result["date_scope_status"] = "HAS_NULL_PICKUP_RECORDS"
+        else:
+            result["date_scope_status"] = "IN_SCOPE"
+
         result["message"] = "File is readable and schema is valid"
 
+        if null_count > 0:
+            result["message"] += "; NULL pickup datetime records found"
+
     except Exception as error:
-        result["status"] = "FAILED"
+        result["file_validation_status"] = "FAILED"
         result["message"] = str(error)
 
     return result
+
 
 
 # Main validation process
@@ -255,7 +274,7 @@ def run_validation():
             logging.info(
                 "%s: %s",
                 filename,
-                result["status"],
+                result["file_validation_status"],
             )
 
     finally:
@@ -276,7 +295,8 @@ def run_validation():
     "outside_study_period_count",
     "pickup_min",
     "pickup_max",
-    "status",
+    "file_validation_status",
+    "date_scope_status",
     "message",
 ]
 
@@ -297,7 +317,7 @@ def run_validation():
 
     # Summary
     passed = sum(
-        result["status"] == "PASS"
+        result["file_validation_status"] == "PASS"
         for result in results
     )
 

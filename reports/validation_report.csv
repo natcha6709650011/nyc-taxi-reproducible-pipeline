@@ -1,25 +1,25 @@
-filename,taxi_type,expected_month,row_count,column_count,missing_columns,null_pickup_count,outside_month_count,outside_study_period_count,pickup_min,pickup_max,status,message
-fhv_tripdata_2024-01.parquet,fhv,2024-01-01 00:00:00,1290116,7,,0,0,0,2024-01-01 00:00:01,2024-01-31 23:59:59,PASS,File is readable and schema is valid
-fhv_tripdata_2024-02.parquet,fhv,2024-02-01 00:00:00,1176093,7,,0,0,0,2024-02-01 00:00:00,2024-02-29 23:59:59,PASS,File is readable and schema is valid
-fhv_tripdata_2024-03.parquet,fhv,2024-03-01 00:00:00,1469352,7,,0,0,0,2024-03-01 00:00:00,2024-03-31 23:59:57,PASS,File is readable and schema is valid
-fhv_tripdata_2024-04.parquet,fhv,2024-04-01 00:00:00,1444626,7,,0,0,0,2024-04-01 00:00:00,2024-04-30 23:59:59,PASS,File is readable and schema is valid
-fhv_tripdata_2024-05.parquet,fhv,2024-05-01 00:00:00,1352502,7,,0,0,0,2024-05-01 00:00:00,2024-05-31 23:59:47,PASS,File is readable and schema is valid
-fhv_tripdata_2024-06.parquet,fhv,2024-06-01 00:00:00,1386539,7,,0,0,0,2024-06-01 00:00:00,2024-06-30 23:59:57,PASS,File is readable and schema is valid
-fhvhv_tripdata_2024-01.parquet,fhvhv,2024-01-01 00:00:00,19663930,24,,0,0,0,2024-01-01 00:00:00,2024-01-31 23:59:59,PASS,File is readable and schema is valid
-fhvhv_tripdata_2024-02.parquet,fhvhv,2024-02-01 00:00:00,19359148,24,,0,0,0,2024-02-01 00:00:00,2024-02-29 23:59:59,PASS,File is readable and schema is valid
-fhvhv_tripdata_2024-03.parquet,fhvhv,2024-03-01 00:00:00,21280788,24,,0,0,0,2024-03-01 00:00:00,2024-03-31 23:59:59,PASS,File is readable and schema is valid
-fhvhv_tripdata_2024-04.parquet,fhvhv,2024-04-01 00:00:00,19733038,24,,0,0,0,2024-04-01 00:00:00,2024-04-30 23:59:59,PASS,File is readable and schema is valid
-fhvhv_tripdata_2024-05.parquet,fhvhv,2024-05-01 00:00:00,20704538,24,,0,0,0,2024-05-01 00:00:00,2024-05-31 23:59:59,PASS,File is readable and schema is valid
-fhvhv_tripdata_2024-06.parquet,fhvhv,2024-06-01 00:00:00,20123226,24,,0,0,0,2024-06-01 00:00:00,2024-06-30 23:59:59,PASS,File is readable and schema is valid
-green_tripdata_2024-01.parquet,green,2024-01-01 00:00:00,56551,20,,0,2,2,2023-12-31 14:38:47,2024-01-31 23:57:29,PASS,File is readable and schema is valid
-green_tripdata_2024-02.parquet,green,2024-02-01 00:00:00,53577,20,,0,6,0,2024-01-25 19:10:32,2024-02-29 23:56:40,PASS,File is readable and schema is valid
-green_tripdata_2024-03.parquet,green,2024-03-01 00:00:00,57457,20,,0,10,2,2008-12-31 23:02:24,2024-04-01 00:01:45,PASS,File is readable and schema is valid
-green_tripdata_2024-04.parquet,green,2024-04-01 00:00:00,56471,20,,0,4,0,2024-03-31 22:34:23,2024-04-30 23:59:33,PASS,File is readable and schema is valid
-green_tripdata_2024-05.parquet,green,2024-05-01 00:00:00,61003,20,,0,9,2,2009-01-01 00:27:54,2024-06-01 00:00:56,PASS,File is readable and schema is valid
-green_tripdata_2024-06.parquet,green,2024-06-01 00:00:00,54748,20,,0,13,0,2024-05-24 17:04:38,2024-06-30 23:57:10,PASS,File is readable and schema is valid
-yellow_tripdata_2024-01.parquet,yellow,2024-01-01 00:00:00,2964624,19,,0,18,15,2002-12-31 22:59:39,2024-02-01 00:01:15,PASS,File is readable and schema is valid
-yellow_tripdata_2024-02.parquet,yellow,2024-02-01 00:00:00,3007526,19,,0,15,2,2008-12-31 22:52:49,2024-03-01 00:01:37,PASS,File is readable and schema is valid
-yellow_tripdata_2024-03.parquet,yellow,2024-03-01 00:00:00,3582628,19,,0,23,2,2002-12-31 22:17:10,2024-04-01 00:34:55,PASS,File is readable and schema is valid
-yellow_tripdata_2024-04.parquet,yellow,2024-04-01 00:00:00,3514289,19,,0,9,4,2002-12-31 22:10:04,2024-05-01 00:02:36,PASS,File is readable and schema is valid
-yellow_tripdata_2024-05.parquet,yellow,2024-05-01 00:00:00,3723833,19,,0,33,7,2002-12-31 16:46:07,2024-06-01 23:54:14,PASS,File is readable and schema is valid
-yellow_tripdata_2024-06.parquet,yellow,2024-06-01 00:00:00,3539193,19,,0,51,9,2008-12-31 00:00:00,2026-06-26 23:53:12,PASS,File is readable and schema is valid
+filename,taxi_type,expected_month,row_count,column_count,missing_columns,null_pickup_count,outside_month_count,outside_study_period_count,pickup_min,pickup_max,file_validation_status,date_scope_status,message
+fhv_tripdata_2024-01.parquet,fhv,2024-01,1290116,7,,0,0,0,2024-01-01 00:00:01,2024-01-31 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhv_tripdata_2024-02.parquet,fhv,2024-02,1176093,7,,0,0,0,2024-02-01 00:00:00,2024-02-29 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhv_tripdata_2024-03.parquet,fhv,2024-03,1469352,7,,0,0,0,2024-03-01 00:00:00,2024-03-31 23:59:57,PASS,IN_SCOPE,File is readable and schema is valid
+fhv_tripdata_2024-04.parquet,fhv,2024-04,1444626,7,,0,0,0,2024-04-01 00:00:00,2024-04-30 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhv_tripdata_2024-05.parquet,fhv,2024-05,1352502,7,,0,0,0,2024-05-01 00:00:00,2024-05-31 23:59:47,PASS,IN_SCOPE,File is readable and schema is valid
+fhv_tripdata_2024-06.parquet,fhv,2024-06,1386539,7,,0,0,0,2024-06-01 00:00:00,2024-06-30 23:59:57,PASS,IN_SCOPE,File is readable and schema is valid
+fhvhv_tripdata_2024-01.parquet,fhvhv,2024-01,19663930,24,,0,0,0,2024-01-01 00:00:00,2024-01-31 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhvhv_tripdata_2024-02.parquet,fhvhv,2024-02,19359148,24,,0,0,0,2024-02-01 00:00:00,2024-02-29 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhvhv_tripdata_2024-03.parquet,fhvhv,2024-03,21280788,24,,0,0,0,2024-03-01 00:00:00,2024-03-31 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhvhv_tripdata_2024-04.parquet,fhvhv,2024-04,19733038,24,,0,0,0,2024-04-01 00:00:00,2024-04-30 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhvhv_tripdata_2024-05.parquet,fhvhv,2024-05,20704538,24,,0,0,0,2024-05-01 00:00:00,2024-05-31 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+fhvhv_tripdata_2024-06.parquet,fhvhv,2024-06,20123226,24,,0,0,0,2024-06-01 00:00:00,2024-06-30 23:59:59,PASS,IN_SCOPE,File is readable and schema is valid
+green_tripdata_2024-01.parquet,green,2024-01,56551,20,,0,2,2,2023-12-31 14:38:47,2024-01-31 23:57:29,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+green_tripdata_2024-02.parquet,green,2024-02,53577,20,,0,6,0,2024-01-25 19:10:32,2024-02-29 23:56:40,PASS,IN_SCOPE,File is readable and schema is valid
+green_tripdata_2024-03.parquet,green,2024-03,57457,20,,0,10,2,2008-12-31 23:02:24,2024-04-01 00:01:45,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+green_tripdata_2024-04.parquet,green,2024-04,56471,20,,0,4,0,2024-03-31 22:34:23,2024-04-30 23:59:33,PASS,IN_SCOPE,File is readable and schema is valid
+green_tripdata_2024-05.parquet,green,2024-05,61003,20,,0,9,2,2009-01-01 00:27:54,2024-06-01 00:00:56,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+green_tripdata_2024-06.parquet,green,2024-06,54748,20,,0,13,0,2024-05-24 17:04:38,2024-06-30 23:57:10,PASS,IN_SCOPE,File is readable and schema is valid
+yellow_tripdata_2024-01.parquet,yellow,2024-01,2964624,19,,0,18,15,2002-12-31 22:59:39,2024-02-01 00:01:15,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+yellow_tripdata_2024-02.parquet,yellow,2024-02,3007526,19,,0,15,2,2008-12-31 22:52:49,2024-03-01 00:01:37,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+yellow_tripdata_2024-03.parquet,yellow,2024-03,3582628,19,,0,23,2,2002-12-31 22:17:10,2024-04-01 00:34:55,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+yellow_tripdata_2024-04.parquet,yellow,2024-04,3514289,19,,0,9,4,2002-12-31 22:10:04,2024-05-01 00:02:36,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+yellow_tripdata_2024-05.parquet,yellow,2024-05,3723833,19,,0,33,7,2002-12-31 16:46:07,2024-06-01 23:54:14,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid
+yellow_tripdata_2024-06.parquet,yellow,2024-06,3539193,19,,0,51,9,2008-12-31 00:00:00,2026-06-26 23:53:12,PASS,HAS_OUT_OF_SCOPE_RECORDS,File is readable and schema is valid

@@ -124,6 +124,7 @@ def validate_file(connection, file_path):
         "pickup_max": "",
         "file_validation_status": "FAILED",
         "date_scope_status": "NOT_CHECKED",
+        "month_alignment_status": "NOT_CHECKED",
         "message": "",
     }
 
@@ -209,6 +210,10 @@ def validate_file(connection, file_path):
 
         result["outside_month_count"] = date_counts[0]
         result["outside_study_period_count"] = date_counts[1]
+        if result["outside_month_count"] > 0:
+            result["month_alignment_status"] = "HAS_CROSS_MONTH_RECORDS"
+        else:
+            result["month_alignment_status"] = "MATCHES_FILE_MONTH"
 
         result["row_count"] = row_count
         result["null_pickup_count"] = null_count
@@ -297,6 +302,7 @@ def run_validation():
     "pickup_max",
     "file_validation_status",
     "date_scope_status",
+    "month_alignment_status",
     "message",
 ]
 
@@ -322,6 +328,40 @@ def run_validation():
     )
 
     failed = len(results) - passed
+
+    
+    # Summary by taxi type
+    print("\n========== SUMMARY BY TAXI TYPE ==========")
+
+    for taxi_type in TAXI_TYPES:
+        taxi_results = [
+            result for result in results
+            if result["taxi_type"] == taxi_type
+        ]
+
+        total_rows = sum(
+            result["row_count"]
+            for result in taxi_results
+        )
+
+        outside_rows = sum(
+            int(result["outside_study_period_count"] or 0)
+            for result in taxi_results
+        )
+
+        passed_files = sum(
+            result["file_validation_status"] == "PASS"
+            for result in taxi_results
+        )
+
+        print(
+            f"{taxi_type.upper():8} | "
+            f"Files: {len(taxi_results)} | "
+            f"Passed: {passed_files} | "
+            f"Rows: {total_rows:,} | "
+            f"Outside study period: {outside_rows:,}"
+        )
+
 
     file_count_valid = len(files) == EXPECTED_FILE_COUNT
 

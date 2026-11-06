@@ -194,10 +194,17 @@ def transform_file(connection, file_path):
     END AS is_cross_month_trip
     """,
 
-    f"""
+        f"""
     CASE
         WHEN {pickup} IS NULL OR {dropoff} IS NULL THEN FALSE
         WHEN {dropoff} < {pickup} THEN TRUE
+        ELSE FALSE
+    END AS is_invalid_duration
+    """,
+
+    f"""
+    CASE
+        WHEN {pickup} IS NULL OR {dropoff} IS NULL THEN FALSE
         WHEN (
             YEAR({pickup}) != YEAR({dropoff})
             OR MONTH({pickup}) != MONTH({dropoff})

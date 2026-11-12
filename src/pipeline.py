@@ -46,7 +46,7 @@ def run_pipeline():
     try:
         transformation_results = run_transformation()
     except Exception:
-        logging.error("Transformation failed. Aborting pipeline.")
+        logging.exception("Transformation failed. Aborting pipeline.")
         return False
 
     logging.info("Step 3 completed successfully.")
@@ -57,7 +57,7 @@ def run_pipeline():
     try:
         integration_results = run_integration()
     except Exception:
-        logging.error("Integration failed. Aborting pipeline.")
+        logging.exception("Integration failed. Aborting pipeline.")
         return False
 
     logging.info("Step 4 completed successfully.")
@@ -68,7 +68,7 @@ def run_pipeline():
     try:
         analysis_results = run_analysis()
     except Exception:
-        logging.error("Analysis failed. Aborting pipeline.")
+        logging.exception("Analysis failed. Aborting pipeline.")
         return False
 
     logging.info("Step 5 completed successfully.")

@@ -114,6 +114,40 @@ def export_monthly_usage_results(results):
     return output_file
 
 
+def run_analysis():
+    """
+    Run all taxi usage analyses and export results.
+    """
+    logging.info("Starting NYC Taxi analysis")
+
+    connection = duckdb.connect()
+
+    try:
+        taxi_usage = analyze_taxi_usage(connection)
+        monthly_usage = analyze_monthly_usage(connection)
+
+        taxi_usage_file = export_taxi_usage_results(taxi_usage)
+        monthly_usage_file = export_monthly_usage_results(monthly_usage)
+
+    finally:
+        connection.close()
+
+    print("\n========== ANALYSIS SUMMARY ==========")
+    print(f"Taxi types analyzed: {len(taxi_usage)}")
+    print(f"Monthly records analyzed: {len(monthly_usage)}")
+    print(f"Taxi usage CSV: {taxi_usage_file}")
+    print(f"Monthly usage CSV: {monthly_usage_file}")
+    print("ANALYSIS RESULT: PASS")
+
+    return {
+        "taxi_usage": taxi_usage,
+        "monthly_usage": monthly_usage,
+        "taxi_usage_file": str(taxi_usage_file),
+        "monthly_usage_file": str(monthly_usage_file),
+    }
+
+
+
 if __name__ == "__main__":
     connection = duckdb.connect()
 

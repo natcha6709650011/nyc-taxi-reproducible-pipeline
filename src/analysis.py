@@ -87,6 +87,32 @@ def export_taxi_usage_results(results):
 
     return output_file
 
+def export_monthly_usage_results(results):
+    """
+    Export monthly taxi usage analysis results to CSV.
+    """
+    import csv
+
+    output_dir = PROJECT_DIR / "outputs"
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    output_file = output_dir / "monthly_trip_count.csv"
+
+    with open(output_file, "w", newline="", encoding="utf-8") as file:
+        writer = csv.writer(file)
+
+        writer.writerow([
+            "pickup_month",
+            "service_type",
+            "total_trips"
+        ])
+
+        writer.writerows(results)
+
+    print(f"Monthly usage results exported to: {output_file}")
+
+    return output_file
+
 
 if __name__ == "__main__":
     connection = duckdb.connect()

@@ -38,6 +38,29 @@ def analyze_taxi_usage(connection):
 
     return results
 
+
+def analyze_monthly_usage(connection):
+    """
+    Analyze monthly trips by taxi type.
+    """
+
+    query = """
+        SELECT
+            pickup_month,
+            service_type,
+            COUNT(*) AS total_trips
+        FROM read_parquet(?)
+        GROUP BY pickup_month, service_type
+        ORDER BY pickup_month, service_type
+    """
+
+    results = connection.execute(
+        query, [str(CURATED_FILE)]
+    ).fetchall()
+
+    return results
+
+
 if __name__ == "__main__":
     connection = duckdb.connect()
 

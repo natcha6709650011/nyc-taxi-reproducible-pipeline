@@ -332,8 +332,82 @@ python src/pipeline.py
 - **Storage Requirement:** ข้อมูล Raw, Processed และ Curated มีขนาดใหญ่ ผู้ใช้งานจึงต้องเตรียมพื้นที่จัดเก็บข้อมูลให้เพียงพอ
 - **Local Processing:** กระบวนการหลักทำงานบนเครื่องผู้ใช้งาน ไม่ได้ประมวลผลผ่านระบบ Cloud โดยตรง
 - **Data Anomalies:** รายการที่มี Invalid Duration และ Suspicious Cross-Month ถูกทำเครื่องหมายไว้ แต่ยังคงอยู่ใน Curated Dataset จึงควรพิจารณาก่อนนำข้อมูลเหล่านี้ไปใช้ในการวิเคราะห์เฉพาะด้าน
-- **Cloud Storage Access:** ข้อมูลที่สำรองไว้บน Amazon S3 อยู่ใน Bucket แบบ Private การเข้าถึงจึงต้องมีสิทธิ์และ Credentials ที่เหมาะสม โดย S3 ไม่ใช่ส่วนบังคับของการรัน Pipeline หลัก
+- **Cloud Storage Access:** ข้อมูล Raw Dataset และ Curated Dataset ถูกจัดเก็บบน Amazon S3 โดยเปิดสิทธิ์ Public Read เฉพาะไฟล์ภายในโฟลเดอร์ `raw/` และ `curated/` ผู้ใช้งานสามารถดาวน์โหลดข้อมูลได้โดยไม่ต้องใช้ AWS Credentials โดยไม่มีสิทธิ์อัปโหลดหรือลบไฟล์
 
 ## 11. สิ่งที่ได้เรียนรู้ (Learning Reflection)
 
 จากการทำโปรเจกต์นี้ทำให้เข้าใจการทำ Data Pipeline มากขึ้น เพราะได้ลองทำตั้งแต่การดาวน์โหลดข้อมูล ตรวจสอบข้อมูล ทำความสะอาด และนำข้อมูลมารวมกัน ตอนแรกการจัดการข้อมูลที่มีขนาดใหญ่ค่อนข้างยาก โดยเฉพาะตอนตรวจสอบและประมวลผลไฟล์ Parquet แต่พอได้ลองใช้ Python และ DuckDB ก็เข้าใจวิธีจัดการข้อมูลมากขึ้น นอกจากนี้ยังได้ฝึกใช้ AWS S3 และ GitHub ซึ่งสามารถนำไปใช้กับการทำโปรเจกต์อื่น ๆ ได้
+
+## 12. การจัดเก็บและดาวน์โหลดข้อมูลผ่าน Amazon S3
+
+โปรเจกต์นี้ใช้ Amazon S3 เป็นพื้นที่จัดเก็บสำเนาข้อมูลบน Cloud เพื่อให้ผู้ที่สนใจสามารถเข้าถึงและดาวน์โหลดชุดข้อมูลไปใช้งานได้ โดยไม่จำเป็นต้องมีบัญชี AWS หรือกำหนดค่า AWS Credentials
+
+ข้อมูลที่จัดเก็บบน S3 แบ่งออกเป็น 2 ประเภท ได้แก่ Raw Dataset และ Curated Dataset
+
+### 12.1 Raw Dataset (ข้อมูลดิบ)
+
+Raw Dataset คือข้อมูลต้นฉบับที่ดาวน์โหลดมาจากเว็บไซต์ NYC Taxi and Limousine Commission (TLC) โดยยังไม่ผ่านกระบวนการทำความสะอาดหรือแปลงข้อมูล
+
+ข้อมูลครอบคลุมช่วงเดือนมกราคมถึงมิถุนายน 2024 รวมทั้งหมด 24 ไฟล์ แบ่งตามประเภทของรถ 4 ประเภท ได้แก่
+
+**1. Yellow Taxi (รถแท็กซี่สีเหลือง)**
+
+- [January 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/yellow_tripdata_2024-01.parquet)
+- [February 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/yellow_tripdata_2024-02.parquet)
+- [March 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/yellow_tripdata_2024-03.parquet)
+- [April 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/yellow_tripdata_2024-04.parquet)
+- [May 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/yellow_tripdata_2024-05.parquet)
+- [June 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/yellow_tripdata_2024-06.parquet)
+
+**2. Green Taxi (รถแท็กซี่สีเขียว)**
+
+- [January 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/green_tripdata_2024-01.parquet)
+- [February 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/green_tripdata_2024-02.parquet)
+- [March 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/green_tripdata_2024-03.parquet)
+- [April 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/green_tripdata_2024-04.parquet)
+- [May 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/green_tripdata_2024-05.parquet)
+- [June 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/green_tripdata_2024-06.parquet)
+
+**3. For-Hire Vehicle (FHV)**
+
+- [January 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhv_tripdata_2024-01.parquet)
+- [February 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhv_tripdata_2024-02.parquet)
+- [March 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhv_tripdata_2024-03.parquet)
+- [April 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhv_tripdata_2024-04.parquet)
+- [May 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhv_tripdata_2024-05.parquet)
+- [June 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhv_tripdata_2024-06.parquet)
+
+**4. High-Volume For-Hire Vehicle (FHVHV)**
+
+- [January 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhvhv_tripdata_2024-01.parquet)
+- [February 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhvhv_tripdata_2024-02.parquet)
+- [March 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhvhv_tripdata_2024-03.parquet)
+- [April 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhvhv_tripdata_2024-04.parquet)
+- [May 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhvhv_tripdata_2024-05.parquet)
+- [June 2024](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/raw/fhvhv_tripdata_2024-06.parquet)
+
+### 12.2 Curated Dataset (ข้อมูลที่ผ่านการประมวลผลแล้ว)
+
+Curated Dataset คือข้อมูลที่ผ่านกระบวนการตรวจสอบคุณภาพ ทำความสะอาด แปลงรูปแบบ และรวมข้อมูลจากรถทั้ง 4 ประเภทเข้าด้วยกันแล้ว
+
+ข้อมูลชุดนี้เป็นผลลัพธ์จากกระบวนการ Data Pipeline ของโปรเจกต์ สามารถนำไปใช้วิเคราะห์ต่อได้ทันทีโดยไม่ต้องประมวลผลข้อมูลดิบใหม่
+
+**รายละเอียดชุดข้อมูล**
+
+- ชื่อไฟล์: `nyc_taxi_trips_2024H1.parquet`
+- จำนวนข้อมูล: 149,326,362 Records
+- ขนาดไฟล์: ประมาณ 3.37 GB
+- รูปแบบไฟล์: Parquet
+
+[ดาวน์โหลด Curated Dataset](https://nyc-taxi-0011.s3.us-east-1.amazonaws.com/curated/nyc_taxi_trips_2024H1.parquet)
+
+### 12.3 วิธีเข้าถึงและใช้งานข้อมูล
+
+ผู้ที่สนใจสามารถคลิกลิงก์ของชุดข้อมูลที่ต้องการเพื่อดาวน์โหลดไฟล์ได้โดยตรง โดยไม่จำเป็นต้องใช้ AWS Credentials
+
+- หากต้องการทดลองกระบวนการ Data Pipeline ตั้งแต่ต้น สามารถใช้ Raw Dataset หรือรัน Pipeline เพื่อดาวน์โหลดข้อมูลจากเว็บไซต์ TLC ได้
+- หากต้องการนำข้อมูลที่ผ่านการประมวลผลแล้วไปวิเคราะห์ต่อ สามารถดาวน์โหลด Curated Dataset ได้ทันที
+
+ไฟล์ทั้งหมดจัดเก็บในรูปแบบ Parquet ซึ่งสามารถนำไปใช้งานร่วมกับเครื่องมือวิเคราะห์ข้อมูล เช่น DuckDB และ Python ได้
+
+**หมายเหตุ:** Amazon S3 ในโปรเจกต์นี้ใช้สำหรับจัดเก็บสำเนาข้อมูลบน Cloud และเป็นช่องทางให้ดาวน์โหลดข้อมูลเพิ่มเติม ส่วนการทำงานหลักของ Data Pipeline ยังคงดึงข้อมูลต้นทางจาก TLC และประมวลผลตามขั้นตอนที่กำหนดไว้ในโปรเจกต์ การดาวน์โหลดไฟล์ขนาดใหญ่จำเป็นต้องมีพื้นที่จัดเก็บและอินเทอร์เน็ตที่เพียงพอ
